@@ -61,7 +61,7 @@ rm -f  osmmap.* *.img *.pbf osmmap_license.txt template* densities* areas*
 #################
 
 # Extract region out of Finland OSM file
-osmosis --read-pbf file=/osm-data/data.osm.pbf --bounding-box left=24.60 bottom=60.15 right=25.11 top=60.28 --write-pbf region.osm.pbf
+osmosis --read-pbf file=/osm-data/data.osm.pbf --bounding-box left=24.37 bottom=60.12 right=25.28 top=60.41 --write-pbf region.osm.pbf
 
 # Split the osm file to smaller pieces
 java -Xmx4000m -jar splitter.jar region.osm.pbf\
@@ -75,7 +75,7 @@ java -Xmx4000m -jar splitter.jar region.osm.pbf\
  --keep-complete=true
 
 # Fix the names in the template.args file descriptions, MAX 20 CHARACTERS
-python3 fix_names.py TK_MTB_Tampere
+python3 fix_names.py TK_MTB_Helsinki
 
 # Create the gmapsupp map file, NOTE THE MAPNAME HAS TO UNIQUE, FAMILY ID IS ALSO UNIQUE
 java -Xmx6000m -jar mkgmap.jar\
