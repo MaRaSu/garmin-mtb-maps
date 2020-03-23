@@ -55,4 +55,4 @@ COPY --chown=renderer *.sh /home/renderer/
 COPY --chown=renderer *.py /home/renderer/
 
 WORKDIR /home/renderer
-ENTRYPOINT /home/renderer/generate_maps.sh
+CMD /home/renderer/generate_maps.sh

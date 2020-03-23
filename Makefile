@@ -11,3 +11,7 @@ push: build
 test: build
 	-docker container rm garmin-mtb-maps
 	docker run --name garmin-mtb-maps -v $(cur_dir)/osm-data:/osm-data -v $(cur_dir)/maps:/ready_maps -it registry.finomena.fi/c/garmin-mtb-maps:0.1.0
+
+test_sh: build
+	-docker container rm garmin-mtb-maps
+	docker run --name garmin-mtb-maps -v $(cur_dir)/osm-data:/osm-data -v $(cur_dir)/maps:/ready_maps -it registry.finomena.fi/c/garmin-mtb-maps:0.1.0 bash
