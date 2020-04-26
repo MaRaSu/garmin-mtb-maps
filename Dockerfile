@@ -30,7 +30,7 @@ RUN mv splitter/lib ../
 
 # Install MKGMAPS
 WORKDIR /home/renderer/download
-RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4473.zip
+RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4483.zip
 RUN unzip mkgmap*.zip
 RUN mv mkgmap*.zip mkgmap*/
 RUN mv mkgmap* mkgmap
