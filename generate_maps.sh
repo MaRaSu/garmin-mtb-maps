@@ -55,10 +55,10 @@ fi
 
 cd /home/renderer
 
-create_map 22.80 61.00 25.00 62.00 "Tampere region" TK_Tampere 88880001 tk_tre.img
+create_map 22.80 61.00 25.00 62.20 "Tampere region" TK_Tampere 88880001 tk_tre.img
 create_map 24.37 60.12 25.28 60.41 "Helsinki region" TK_Helsinki 88890002 tk_hki.img
 create_map 24.50 64.70 26.20 65.25 "Oulu region" TK_Oulu 88900003 tk_oulu.img
 create_map 24.98314 60.87659 26.28208 61.37907 "Lahti region" TK_Lahti 88910004 tk_lahti.img
 create_map 21.50 60.70 23.00 61.50 "Eura region" TK_Eura 88920005 tk_eura.img
-create_map 27.30 62.70 28.10 63.20 "Kuopio region" TK_Eura 88930006 tk_kuopio.img
+create_map 27.30 62.70 28.10 63.20 "Kuopio region" TK_Kuopio 88930006 tk_kuopio.img
  

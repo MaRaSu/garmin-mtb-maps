@@ -3,10 +3,10 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 cur_dir := $(dir $(mkfile_path))
 
 build: 
-	docker build -t registry.finomena.fi/c/garmin-mtb-maps:0.2.1 --build-arg NOCACHE=$$(date +%s) .
+	docker build -t registry.finomena.fi/c/garmin-mtb-maps:0.2.3 --build-arg NOCACHE=$$(date +%s) .
 
 push: build
-	docker push registry.finomena.fi/c/garmin-mtb-maps:0.2.1
+	docker push registry.finomena.fi/c/garmin-mtb-maps:0.2.3
 
 test: build
 	-docker container rm garmin-mtb-maps
