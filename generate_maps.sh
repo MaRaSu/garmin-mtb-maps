@@ -59,6 +59,12 @@ create_map 22.80 61.00 25.00 62.20 "Tampere region" TK_Tampere 88880001 tk_tre.i
 create_map 24.37 60.12 25.28 60.41 "Helsinki region" TK_Helsinki 88890002 tk_hki.img
 create_map 24.50 64.70 26.20 65.25 "Oulu region" TK_Oulu 88900003 tk_oulu.img
 create_map 24.98314 60.87659 26.28208 61.37907 "Lahti region" TK_Lahti 88910004 tk_lahti.img
-create_map 21.50 60.70 23.00 61.50 "Eura region" TK_Eura 88920005 tk_eura.img
+create_map 21.20 60.70 23.00 61.70 "Eura Pori Rauma region" TK_Eura 88920005 tk_eura.img
 create_map 27.30 62.70 28.10 63.20 "Kuopio region" TK_Kuopio 88930006 tk_kuopio.img
+create_map 29.02 65.36 29.74 65.58 "Hossa region" TK_Hossa 88950008 tk_hossa.img
+create_map 27.41 65.52 27.91 65.81 "Syote region" TK_Syote 88960009 tk_syote.img
+create_map 23.35 67.39 25.12 68.42 "Levi Ylläs" TK_Yllas 88970010 tk_yllas.img 
+
+create_map 21.00 59.75 31.60 70.08 "Finland" TK_Finland 88940007 tk_finland.img
+
  
