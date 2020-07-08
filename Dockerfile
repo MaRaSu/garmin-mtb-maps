@@ -49,6 +49,7 @@ WORKDIR /home/renderer/styles
 RUN git clone https://github.com/Myrtillus/Garmin_OSM_TK_map.git .
 RUN mv *.typ ../
 RUN mv TK ../
+RUN mv TK_pathsonly ../
 
 # Copy scripts
 COPY --chown=renderer *.sh /home/renderer/
