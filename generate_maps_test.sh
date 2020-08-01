@@ -55,6 +55,6 @@ fi
 
 cd /home/renderer
 
-create_map 22.80 61.00 25.00 62.20 TK_pathsonly "Tampere region" TK_Tampere 88980011 tk_tre_paths.img
+create_map 22.80 61.00 25.00 62.20 TK_pathsonly "Tampere region" TK_Tampere 88980011 tk_tre_paths.img "--transparent --draw-priority=30"
 
  

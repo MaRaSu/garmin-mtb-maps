@@ -1,5 +1,5 @@
 .PHONY: build push test
-version_tag=0.3.0
+version_tag=0.4.4
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 cur_dir := $(dir $(mkfile_path))
 
