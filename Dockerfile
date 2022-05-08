@@ -21,7 +21,7 @@ RUN mkdir /home/renderer/styles
 
 # Install SPLITTER
 WORKDIR /home/renderer/download
-RUN wget -nv http://www.mkgmap.org.uk/download/splitter-r598.zip
+RUN wget -nv http://www.mkgmap.org.uk/download/splitter-r651.zip
 RUN unzip splitter*.zip
 RUN mv splitter*.zip splitter*/
 RUN mv splitter* splitter
@@ -30,7 +30,7 @@ RUN mv splitter/lib ../
 
 # Install MKGMAPS
 WORKDIR /home/renderer/download
-RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4608.zip
+RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4900.zip
 RUN unzip mkgmap*.zip
 RUN mv mkgmap*.zip mkgmap*/
 RUN mv mkgmap* mkgmap
