@@ -33,18 +33,10 @@ function create_map() {
 # Download Finland if no data is provided
 if [ ! -f /data/data.osm.pbf ]; then
 	echo "WARNING: No import file at /data.osm.pbf, so importing Finland as default..."
-	wget -nv http://download.geofabrik.de/europe/finland-latest.osm.pbf -O /osm-data/data.osm.pbf
+	wget -nv http://download.geofabrik.de/europe/finland-latest.osm.pbf -O /data/data.osm.pbf
 fi
 
 cd /home/renderer
 
-# create_map 22.80 61.00 25.00 62.20 TK "Tampere region v1" TK_Tampere MTB_Tampere 88880001 tk_tre.img
-# create_map 22.80 61.00 25.00 62.20 TK_pathsonly "Tampere region paths" TK_Tampere MTB_Tampere_paths 88980011 tk_tre_paths.img "--transparent --draw-priority=30"
-# create_map 22.80 61.00 25.00 62.20 TK "Tampere region" TK_Tampere_v2 MTB_Tampere_v2 88890002 tk_tre_v2.img
-# create_map 24.37 60.12 25.28 60.41 TK "Helsinki region" TK_Tampere_v2 MTB_Helsinki_v2 88900003 tk_hki_v2.img
-# create_map 21.00 59.43 23.30 60.80 TK "Turku region" TK_Tampere_v2 TK_Turku 89100020 tk_turku.img
-# create_map 21.00 59.43 23.30 60.80 TK_pathsonly "Turku region" TK_Tampere_v2 TK_Turku_polut 89110021 tk_turku_paths.img "--transparent --draw-priority=30"
-create_map 22.80 61.00 25.00 62.20 TK "Tampere region" tk_finland_v2_noborders TK_Tampere 88880031 tk_tre_test.img
-create_map 22.80 61.00 25.00 62.20 TK_pathsonly "Tampere region" tk_finland_v2_noborders TK_Tampere_polut 88980041 tk_tre_paths_test.img "--transparent --draw-priority=30"
-create_map 22.80 61.00 25.00 62.20 TK "Tampere region" tk_finland_v2_bitmapborders TK_Tampere 88880051 tk_tre_test2.img
-create_map 22.80 61.00 25.00 62.20 TK_pathsonly "Tampere region" tk_finland_v2_bitmapborders TK_Tampere_polut 88980061 tk_tre_paths_test2.img "--transparent --draw-priority=30"
+create_map 21.00 59.75 31.60 70.08 TK "Finland" TK_Finland_v2 TK_Finland 88940007 tk_finland.img
+# create_map 21.00 59.75 31.60 70.08 TK_pathsonly "Finland" TK_Tampere_v2 TK_Finland_polut 89070017 tk_finland_paths.img "--transparent --draw-priority=30"
