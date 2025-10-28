@@ -23,6 +23,7 @@ RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
 USER renderer
 RUN mkdir /home/renderer/download
 RUN mkdir /home/renderer/styles
+RUN mkdir /home/renderer/bin
 
 # Install SPLITTER
 WORKDIR /home/renderer/download
@@ -48,7 +49,7 @@ RUN wget -nv http://osm.thkukuk.de/data/sea-latest.zip -O sea.zip
 RUN wget -nv http://download.geonames.org/export/dump/cities15000.zip -O cities.zip
 RUN mv *.zip ../
 
-# Configure stylesheets
+# Configure TK stylesheets
 ARG NOCACHE=0
 WORKDIR /home/renderer/styles
 RUN git clone https://github.com/Myrtillus/Garmin_OSM_TK_map.git .
@@ -57,9 +58,20 @@ RUN mv TK ../
 RUN mv TK_pathsonly ../
 COPY *.typ /home/renderer/
 
+# Configure Trailmap stylesheets (from local trailmap-garmin directory)
+WORKDIR /home/renderer
+COPY --chown=renderer trailmap-garmin/trailmap_routing_v1 ./trailmap_routing_v1
+COPY --chown=renderer trailmap-garmin/trailmap_bottom_v1 ./trailmap_bottom_v1
+COPY --chown=renderer trailmap-garmin/trailmap_main_v1 ./trailmap_main_v1
+COPY --chown=renderer trailmap-garmin/trailmap_mtb_v1.typ ./trailmap_mtb_v1.typ
+
 # Copy scripts
 COPY --chown=renderer *.sh /home/renderer/
 COPY --chown=renderer *.py /home/renderer/
+
+# Copy gmt binary for merging multi-layer maps
+COPY --chown=renderer bin/gmt /home/renderer/bin/gmt
+RUN chmod +x /home/renderer/bin/gmt
 
 WORKDIR /home/renderer
 ENTRYPOINT ["/home/renderer/run.sh"]

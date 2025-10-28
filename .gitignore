@@ -1,3 +1,6 @@
 maps
 osm-data
 .DS_Store
+.vscode/
+bin/gmt
+trailmap-garmin
