@@ -49,7 +49,11 @@ The application is designed to run entirely in Docker:
 
 MinIO object storage is used for data persistence:
 - **get_from_store.sh**: Downloads OSM data files named with weekday suffix (e.g., finland_1.osm.pbf)
-- **upload_to_store.sh**: Uploads generated maps as tar.gz archives with weekday rotation
+- **upload_to_store.sh**: Uploads generated maps with weekday rotation
+  - Supports two modes: `multi` (default, creates tar.gz archive) and `single` (uploads raw .img file)
+  - Usage: `./upload_to_store.sh <type> <region> [mode]`
+  - TK maps use multi mode: `garmin-finland_${WEEKDAY}.tar.gz` (multiple regional maps)
+  - Trailmap uses single mode: `garmin_new-finland_${WEEKDAY}.img` (one multi-layer map)
 - **config_minio.sh**: Configures mc client with S3_ACCESS_KEY and S3_SECRET_KEY environment variables
 - Retry logic with 5 attempts and 60-second backoff for network resilience
 
@@ -108,10 +112,10 @@ The entrypoint script `run.sh` automates the complete workflow:
 1. **Configure MinIO client** - Set up object storage access
 2. **Download OSM data** - Fetch `finland_${WEEKDAY}.osm.pbf` from MinIO
 3. **Generate TK maps** - Create all regional TK maps via `generate_maps.sh`
-4. **Upload TK maps** - Package and upload to MinIO as `garmin-finland_${WEEKDAY}.tar.gz`
+4. **Upload TK maps** - Archive (multi mode) and upload to MinIO as `garmin-finland_${WEEKDAY}.tar.gz`
 5. **Cleanup** - Remove TK map outputs from `/data/`
 6. **Generate trailmap** - Create multi-layer Finland map via `generate_trailmap.sh`
-7. **Upload trailmap** - Package and upload to MinIO as `garmin_new-finland_${WEEKDAY}.tar.gz`
+7. **Upload trailmap** - Upload single file (single mode) to MinIO as `garmin_new-finland_${WEEKDAY}.img`
 
 Both map types use the same source OSM data but are generated and uploaded separately to avoid conflicts.
 
@@ -174,7 +178,8 @@ Merge with gmt CLI → /data/trailmap_finland.img
 - Styles from local directory: `trailmap-garmin/` (cloned from private repository)
 - Required style directories: trailmap_routing_v1, trailmap_bottom_v1, trailmap_main_v1
 - Output: `/data/trailmap_finland.img`
-- MinIO upload prefix: `garmin_new-finland` (vs. `garmin-finland` for TK maps)
+- MinIO upload: `garmin_new-finland_${WEEKDAY}.img` (raw .img file, not archived)
+- TK maps upload: `garmin-finland_${WEEKDAY}.tar.gz` (multiple files, tar+gzipped)
 - Uses gmt binary located at /home/renderer/bin/gmt
 - TYP file: trailmap_mtb_v1.typ (included in trailmap-garmin directory)
 
