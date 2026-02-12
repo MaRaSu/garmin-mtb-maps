@@ -3,7 +3,8 @@
 set -e
 
 cd /home/renderer/
-./config_minio.sh
+source /home/renderer/storage.sh
+storage_init
 
 ./get_from_store.sh finland
 

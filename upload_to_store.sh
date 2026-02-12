@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/renderer/storage.sh
+
 WEEKDAY=$(date +%u)
 WEEKDAY_MINUS_2=$(((WEEKDAY - 2 + 6) % 7 + 1))
 BASENAME="${1}-${2}"
@@ -28,16 +30,16 @@ retry_operation() {
 handle_upload() {
     local extension=$1
     local source="/data/${BASENAME}_${WEEKDAY}.${extension}"
-    local destination="trailmap/trailmap-internal/"
-    local old_dataset="trailmap/trailmap-internal/${BASENAME}_${WEEKDAY_MINUS_2}.${extension}"
+    local remote_filename="${BASENAME}_${WEEKDAY}.${extension}"
+    local old_remote="${BASENAME}_${WEEKDAY_MINUS_2}.${extension}"
 
     # Copy new file
-    if ! retry_operation "mc cp $source $destination"; then
+    if ! retry_operation "storage_upload $source $remote_filename"; then
         echo "Failed to upload new file for ${BASENAME}"
         return 1
     fi
 
-    mc rm "$old_dataset" || true
+    storage_delete "$old_remote" || true
 }
 
 handle_zip() {

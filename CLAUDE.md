@@ -42,19 +42,41 @@ The application is designed to run entirely in Docker:
 - Base image: Ubuntu 24.04
 - Java 8 JDK for mkgmap/splitter
 - Osmosis for OSM data processing
-- MinIO client (mc) for object storage
+- MinIO client (mc) for S3 object storage
+- rsync + openssh-client for Hetzner Storage Box
 - Volume mount for testing: `/data` (maps to local osm-data/ directory for both input and output)
 
 ### Storage Integration
 
-MinIO object storage is used for data persistence:
+Storage is abstracted via `storage.sh`, which supports two backends selected at runtime:
+
+**Backend Selection:** If `STORAGEBOX_HOST` env var is set, uses Hetzner Storage Box (rsync over SSH). Otherwise, uses S3/MinIO (default).
+
+**Storage abstraction layer (`storage.sh`):**
+- `storage_init()` — Initializes the selected backend (S3: configures mc client; Storagebox: validates SSH key and tests connectivity)
+- `storage_download(remote_filename, local_path)` — Downloads a file
+- `storage_upload(local_path, remote_filename)` — Uploads a file
+- `storage_exists(remote_filename)` — Checks if a remote file exists
+- `storage_delete(remote_filename)` — Deletes a remote file
+
+**S3 mode environment variables:**
+- `S3_ACCESS_KEY` — MinIO/S3 access key
+- `S3_SECRET_KEY` — MinIO/S3 secret key
+
+**Storage Box mode environment variables:**
+- `STORAGEBOX_HOST` — Hostname (required, triggers storagebox mode)
+- `STORAGEBOX_PORT` — SSH port (default: 23)
+- `STORAGEBOX_PATH` — Remote base path (default: /home)
+- `STORAGEBOX_KEY` — Path to SSH private key (default: /secrets/storagebox/id_rsa)
+
+**Scripts using storage:**
 - **get_from_store.sh**: Downloads OSM data files named with weekday suffix (e.g., finland_1.osm.pbf)
 - **upload_to_store.sh**: Uploads generated maps with weekday rotation
   - Supports two modes: `multi` (default, creates tar.gz archive) and `single` (uploads raw .img file)
   - Usage: `./upload_to_store.sh <type> <region> [mode]`
   - TK maps use multi mode: `garmin-finland_${WEEKDAY}.tar.gz` (multiple regional maps)
   - Trailmap uses single mode: `garmin_new-finland_${WEEKDAY}.img` (one multi-layer map)
-- **config_minio.sh**: Configures mc client with S3_ACCESS_KEY and S3_SECRET_KEY environment variables
+- **config_minio.sh**: Configures mc client (called by storage_init in S3 mode)
 - Retry logic with 5 attempts and 60-second backoff for network resilience
 
 ## Common Commands

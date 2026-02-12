@@ -10,7 +10,7 @@ RUN chown renderer /osm-data
 # Install packages
 RUN apt-get --yes update && \
 	apt-get install --yes --no-install-recommends apt-utils apt-transport-https ca-certificates gpg openjdk-8-jdk python3 osmosis wget git-core \
-	unzip pigz tar \
+	unzip pigz tar rsync openssh-client \
 	&& apt-get clean autoclean \
 	&& apt-get autoremove --yes \
 	&& rm -rf /var/lib/{apt,dpkg,cache,log}/
@@ -36,7 +36,7 @@ RUN mv splitter/lib ../
 
 # Install MKGMAPS
 WORKDIR /home/renderer/download
-RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4923.zip
+RUN wget -nv http://www.mkgmap.org.uk/download/mkgmap-r4924.zip
 RUN unzip mkgmap*.zip
 RUN mv mkgmap*.zip mkgmap*/
 RUN mv mkgmap* mkgmap

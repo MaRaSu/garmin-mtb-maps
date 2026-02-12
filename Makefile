@@ -1,4 +1,4 @@
-VERSION = 0.8.4
+VERSION = 0.9.0
 REGISTRY = registry-hetzner.finomena.fi
 IMAGE_NAME = garmin-mtb-maps
 DATE = $(shell date +%Y%m%d)

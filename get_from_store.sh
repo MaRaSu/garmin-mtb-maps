@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/renderer/storage.sh
+
 WEEKDAY=$(date +%u)
 
 # Function to retry operations with backoff
@@ -24,17 +26,17 @@ retry_operation() {
 # Function to handle file download
 handle_download() {
     local dataset=$1
-    local source="trailmap/trailmap-internal/${dataset}_${WEEKDAY}.osm.pbf"
+    local remote_filename="${dataset}_${WEEKDAY}.osm.pbf"
     local destination="/data/data.osm.pbf"
 
     # Check if source file exists
-    if mc stat "$source" >/dev/null 2>&1; then
-        if ! retry_operation "mc cp $source $destination"; then
+    if storage_exists "$remote_filename"; then
+        if ! retry_operation "storage_download $remote_filename $destination"; then
             echo "Failed to download file for $dataset"
             return 1
         fi
     else
-        echo "File not found: $source"
+        echo "File not found: $remote_filename"
         return 1
     fi
 }
