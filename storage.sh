@@ -46,7 +46,7 @@ storage_download() {
 	if [ "${STORAGE_MODE}" = "s3" ]; then
 		mc cp trailmap/trailmap-internal/${remote_filename} ${local_path}
 	else
-		rsync -e "${RSYNC_SSH}" --partial --append-verify --inplace --timeout=300 --info=progress2 ${STORAGEBOX_HOST}:${STORAGEBOX_PATH}/${remote_filename} ${local_path}
+		rsync -e "${RSYNC_SSH}" --partial --inplace --timeout=300 --info=progress2 ${STORAGEBOX_HOST}:${STORAGEBOX_PATH}/${remote_filename} ${local_path}
 	fi
 }
 
@@ -56,7 +56,7 @@ storage_upload() {
 	if [ "${STORAGE_MODE}" = "s3" ]; then
 		mc cp ${local_path} trailmap/trailmap-internal/${remote_filename}
 	else
-		rsync -e "${RSYNC_SSH}" --partial --append-verify --inplace --timeout=300 --info=progress2 ${local_path} ${STORAGEBOX_HOST}:${STORAGEBOX_PATH}/${remote_filename}
+		rsync -e "${RSYNC_SSH}" --partial --inplace --timeout=300 --info=progress2 ${local_path} ${STORAGEBOX_HOST}:${STORAGEBOX_PATH}/${remote_filename}
 	fi
 }
 
