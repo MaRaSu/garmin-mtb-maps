@@ -17,4 +17,5 @@ rm -f /data/*.img
 
 # Generate and upload new trailmap (multi-layer) maps
 ./generate_trailmap.sh
-./upload_to_store.sh garmin_new finland single
+./upload_to_store.sh garmin_new finland single trailmap_finland.img
+./upload_to_store.sh garmin_winter finland single trailmap_winter_finland.img

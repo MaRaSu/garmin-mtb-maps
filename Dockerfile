@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS base
 
 # Set up environment and renderer user
 ENV TZ=Europe/Helsinki
@@ -49,8 +49,8 @@ RUN wget -nv http://osm.thkukuk.de/data/sea-latest.zip -O sea.zip
 RUN wget -nv http://download.geonames.org/export/dump/cities15000.zip -O cities.zip
 RUN mv *.zip ../
 
-# Configure TK stylesheets
-ARG NOCACHE=0
+# Configure TK stylesheets (named stage for selective cache busting)
+FROM base AS tkstyles
 WORKDIR /home/renderer/styles
 RUN git clone https://github.com/Myrtillus/Garmin_OSM_TK_map.git .
 RUN mv *.typ ../
@@ -59,11 +59,16 @@ RUN mv TK_pathsonly ../
 COPY *.typ /home/renderer/
 
 # Configure Trailmap stylesheets (from local trailmap-garmin directory)
+FROM tkstyles
 WORKDIR /home/renderer
-COPY --chown=renderer trailmap-garmin/trailmap_routing_v1 ./trailmap_routing_v1
-COPY --chown=renderer trailmap-garmin/trailmap_bottom_v1 ./trailmap_bottom_v1
-COPY --chown=renderer trailmap-garmin/trailmap_main_v1 ./trailmap_main_v1
+COPY --chown=renderer trailmap-garmin/trailmap_mtb_routing_v1 ./trailmap_mtb_routing_v1
+COPY --chown=renderer trailmap-garmin/trailmap_mtb_bottom_v1 ./trailmap_mtb_bottom_v1
+COPY --chown=renderer trailmap-garmin/trailmap_mtb_main_v1 ./trailmap_mtb_main_v1
+COPY --chown=renderer trailmap-garmin/trailmap_winter_routing_v1 ./trailmap_winter_routing_v1
+COPY --chown=renderer trailmap-garmin/trailmap_winter_bottom_v1 ./trailmap_winter_bottom_v1
+COPY --chown=renderer trailmap-garmin/trailmap_winter_main_v1 ./trailmap_winter_main_v1
 COPY --chown=renderer trailmap-garmin/trailmap_mtb_v1.typ ./trailmap_mtb_v1.typ
+COPY --chown=renderer trailmap-garmin/trailmap_winter_v1.typ ./trailmap_winter_v1.typ
 
 # Copy scripts
 COPY --chown=renderer *.sh /home/renderer/

@@ -6,6 +6,7 @@ WEEKDAY=$(date +%u)
 WEEKDAY_MINUS_2=$(((WEEKDAY - 2 + 6) % 7 + 1))
 BASENAME="${1}-${2}"
 MODE="${3:-multi}"  # Default to "multi" if not specified
+SOURCE_FILE="${4:-}"  # Optional: specific source filename for single mode
 
 # Function to retry operations with backoff
 retry_operation() {
@@ -58,15 +59,25 @@ handle_zip() {
 handle_single() {
     cd /data || exit 1
 
-    # Find the single .img file
-    local img_files=(*.img)
+    local source_file
+    if [ -n "$SOURCE_FILE" ]; then
+        # Use specified source file
+        if [ ! -f "$SOURCE_FILE" ]; then
+            echo "Error: Specified source file '$SOURCE_FILE' not found"
+            return 1
+        fi
+        source_file="$SOURCE_FILE"
+    else
+        # Find the single .img file
+        local img_files=(*.img)
 
-    if [ ${#img_files[@]} -ne 1 ]; then
-        echo "Error: Expected exactly one .img file, found ${#img_files[@]}"
-        return 1
+        if [ ${#img_files[@]} -ne 1 ]; then
+            echo "Error: Expected exactly one .img file, found ${#img_files[@]}"
+            return 1
+        fi
+        source_file="${img_files[0]}"
     fi
 
-    local source_file="${img_files[0]}"
     local destination="${BASENAME}_${WEEKDAY}.img"
 
     # Rename/copy to expected filename

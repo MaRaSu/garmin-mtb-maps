@@ -1,4 +1,4 @@
-VERSION = 0.9.1
+VERSION = 0.10.0
 REGISTRY = registry-hetzner.finomena.fi
 IMAGE_NAME = garmin-mtb-maps
 DATE = $(shell date +%Y%m%d)
@@ -9,7 +9,7 @@ cur_dir := $(dir $(mkfile_path))
 .PHONY: build push test test_sh
 
 build:
-	docker buildx build --platform linux/amd64 -t $(REGISTRY)/$(IMAGE_NAME):$(VERSION) --build-arg NOCACHE=$$(date +%s) .
+	docker buildx build --platform linux/amd64 -t $(REGISTRY)/$(IMAGE_NAME):$(VERSION) --no-cache-filter=tkstyles .
 
 push: build
 	docker push $(REGISTRY)/$(IMAGE_NAME):$(VERSION)
